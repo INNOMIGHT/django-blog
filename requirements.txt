@@ -1,0 +1,3 @@
+-r requirements/production.txt
+
+environ~=1.0

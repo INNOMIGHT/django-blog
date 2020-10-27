@@ -1,25 +1,22 @@
 from django.http import HttpResponse
 from django.shortcuts import get_list_or_404, get_object_or_404
-from django.views import View
-import json
 from .models import Tag
-from rest_framework.renderers import JSONRenderer
 from .serializers import TagSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 
-class TagApiDetail(View):
+class TagApiDetail(APIView):
 
     def get(self, request, pk):
         tag = get_object_or_404(Tag, pk=pk)
         s_tag = TagSerializer(tag)
-        tag_json = JSONRenderer().render(s_tag.data)
-        return HttpResponse(tag_json, content_type="application/json")
+        return Response(s_tag.data)
 
 
-class TagApiList(View):
+class TagApiList(APIView):
 
     def get(self, request):
         tag_list = get_list_or_404(Tag)
         s_tag = TagSerializer(tag_list, many=True)
-        tag_json = JSONRenderer().render(s_tag.data)
-        return HttpResponse(tag_json, content_type="application/json")
+        return Response(s_tag.data)

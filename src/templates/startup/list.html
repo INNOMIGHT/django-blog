@@ -1,0 +1,10 @@
+<h2>Startups</h2>
+<ul>
+    {% for startup in startup_set.all %}
+    <li>
+        <a href=""> {{ startup.name }} </a>
+    </li>
+    {% empty %}
+    <li><em>There are no startups at the moment.</em></li>
+    {% endfor %}
+</ul>

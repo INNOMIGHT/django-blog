@@ -1,0 +1,19 @@
+<h2>Blog Posts</h2>
+<article>
+    <header>
+    <ul>
+        {% for post in post_list %}
+        <li><a href=""> {{post.title|title}} </a></li>
+        <p>
+            Written On <time datetime="{{ post.pub_date|date:"Y-m-d"}}"></time>
+        </p>
+    </ul>
+    </header>
+    <p>
+        {{ post.text|truncatewords:20 }}
+    </p>
+    <p><a href="">Read More...</a></p>
+</article>
+{% empty %}
+<em><p>There are no blog posts as of now.</p></em>
+<% endfor %}

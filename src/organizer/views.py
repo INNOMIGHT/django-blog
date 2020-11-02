@@ -2,23 +2,31 @@ from .models import Tag, Startup, NewsLink
 from .serializers import TagSerializer, StartupSerializer, NewsLinkSerializer
 from django.shortcuts import get_object_or_404, render
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from django.views import View
+from django.views.generic import ListView, DetailView
 
 
-class TagList(View):
+class TagList(ListView):
 
-    def get(self, request):
-        tag_list = Tag.objects.all()
-        context = {"tag_list": tag_list}
-        return render(request, 'tag/list.html', context)
+    queryset = Tag.objects.all()
+    template_name = 'tag/list.html'
 
 
-class TagDetail(View):
-    def get(self, request, slug):
-        tag = get_object_or_404(Tag, slug=slug)
-        context = {'tag': tag}
-        return render(request, 'tag/detail.html', context)
+class TagDetail(DetailView):
 
+    queryset = Tag.objects.all()
+    template_name = 'tag/detail.html'
+
+
+class StartupList(ListView):
+
+    queryset = Startup.objects.all()
+    template_name = 'startup/list.html'
+
+
+class StartupDetail(DetailView):
+
+    queryset = Startup.objects.all()
+    template_name = 'startup/detail.html'
 
 
 class TagApiDetail(RetrieveAPIView):

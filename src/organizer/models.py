@@ -10,6 +10,8 @@ from django.db.models import (
     EmailField, CASCADE
 )
 
+from django.urls import reverse
+
 
 class Tag(Model):
 
@@ -24,6 +26,11 @@ class Tag(Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("tag-detail", kwargs={
+            "slug": self.slug,
+        })
 
 
 class Startup(Model):
@@ -45,6 +52,11 @@ class Startup(Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("startup-detail", kwargs={
+            "slug": self.slug,
+        })
 
 
 class NewsLink(Model):

@@ -1,4 +1,10 @@
-<h2>Startups</h2>
+{% extends parent_template|default:"startup/base.html" %}
+
+{% block title %}
+    {{ block.super }} - {{ post.title|title }}
+{% endblock %}}
+
+{% block content %}<h2>Startups</h2>
 <ul>
     {% for startup in startup_set.all %}
     <li>
@@ -8,3 +14,4 @@
     <li><em>There are no startups at the moment.</em></li>
     {% endfor %}
 </ul>
+{% endblock %}

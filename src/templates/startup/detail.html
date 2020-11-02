@@ -1,3 +1,10 @@
+{% extends parent_template|default:"startup/base.html" %}
+
+{% block title %}
+    {{ block.super }} - {{ post.title|title }}
+{% endblock %}}
+
+{% block content %}
 <h2>{{ startup.name }}</h2>
 <dl>
     <dt> Date Founded </dt>
@@ -25,4 +32,5 @@
         {% endfor %}
     </ul>
 </section>
+{% endblock %}
 

@@ -41,23 +41,10 @@ class TagApiDetail(RetrieveAPIView):
     lookup_field = "slug"
 
 
-class TagApiList(ListAPIView):
+class TagApiList(ListCreateAPIView):
 
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-
-    def post(self, request):
-        s_tag = self.serializer_class(
-            data=request.data, context={request: "request"}
-        )
-        if s_tag.is_valid():
-            s_tag.save()
-            return Response(
-                s_tag.data, HTTP_201_CREATED
-            )
-        return (
-            s_tag.errors, HTTP_400_BAD_REQUEST
-        )
 
 
 class StartupApiDetail(RetrieveAPIView):

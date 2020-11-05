@@ -1,8 +1,13 @@
 from .models import Tag, Startup, NewsLink
 from .serializers import TagSerializer, StartupSerializer, NewsLinkSerializer
 from django.shortcuts import get_object_or_404, render
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView
 from django.views.generic import ListView, DetailView
+from rest_framework.response import Response
+from rest_framework.status import (
+    HTTP_201_CREATED,
+    HTTP_400_BAD_REQUEST
+)
 
 
 class TagList(ListView):
@@ -40,6 +45,19 @@ class TagApiList(ListAPIView):
 
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+
+    def post(self, request):
+        s_tag = self.serializer_class(
+            data=request.data, context={request: "request"}
+        )
+        if s_tag.is_valid():
+            s_tag.save()
+            return Response(
+                s_tag.data, HTTP_201_CREATED
+            )
+        return (
+            s_tag.errors, HTTP_400_BAD_REQUEST
+        )
 
 
 class StartupApiDetail(RetrieveAPIView):

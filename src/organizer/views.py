@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView
 from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_200_OK,
+    HTTP_204_NO_CONTENT,
     HTTP_400_BAD_REQUEST
 )
 
@@ -20,6 +21,11 @@ class TagDetail(DetailView):
 
     queryset = Tag.objects.all()
     template_name = 'tag/detail.html'
+
+    def delete(self, request, slug):
+        tag = self.get_object()
+        tag.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
 
 
 class StartupList(ListView):

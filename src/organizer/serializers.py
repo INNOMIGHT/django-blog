@@ -12,6 +12,7 @@ class TagSerializer(HyperlinkedModelSerializer):
                 "view_name": "tag-api-detail",
             },
         }
+        
 
 
 class StartupSerializer(HyperlinkedModelSerializer):

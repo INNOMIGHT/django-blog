@@ -1,7 +1,7 @@
 from .models import Tag, Startup, NewsLink
 from .serializers import TagSerializer, StartupSerializer, NewsLinkSerializer
 from django.shortcuts import get_object_or_404, render
-from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView, RetrieveUpdateAPIView, RetrieveUpdateDestroyAPIView
 from django.views.generic import ListView, DetailView
 from rest_framework.response import Response
 from rest_framework.status import (
@@ -22,11 +22,6 @@ class TagDetail(DetailView):
     queryset = Tag.objects.all()
     template_name = 'tag/detail.html'
 
-    def delete(self, request, slug):
-        tag = self.get_object()
-        tag.delete()
-        return Response(status=HTTP_204_NO_CONTENT)
-
 
 class StartupList(ListView):
 
@@ -40,7 +35,7 @@ class StartupDetail(DetailView):
     template_name = 'startup/detail.html'
 
 
-class TagApiDetail(RetrieveUpdateAPIView):
+class TagApiDetail(RetrieveUpdateDestroyAPIView):
 
     queryset = Tag.objects.all()
     serializer_class = TagSerializer

@@ -43,7 +43,7 @@ class Startup(Model):
     description = TextField()
     founded_date = DateField("date founded")
     contact = EmailField()
-    website = URLField(max_length=255)
+    website = CharField(max_length=255)
     tags = ManyToManyField(Tag)
 
     class Meta:

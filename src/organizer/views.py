@@ -1,14 +1,17 @@
 from .models import Tag, Startup, NewsLink
 from .serializers import TagSerializer, StartupSerializer, NewsLinkSerializer
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect, reverse
 from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView, RetrieveUpdateAPIView, RetrieveUpdateDestroyAPIView
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_200_OK,
     HTTP_204_NO_CONTENT,
     HTTP_400_BAD_REQUEST
 )
+from django.views import View
+from .forms import TagForm, StartupForm
+from django.urls import reverse_lazy
 
 
 class TagList(ListView):
@@ -21,6 +24,29 @@ class TagDetail(DetailView):
 
     queryset = Tag.objects.all()
     template_name = 'tag/detail.html'
+
+
+class TagCreate(CreateView):
+
+    form_class = TagForm
+    model = Tag
+    template_name = "tag/form.html"
+    extra_context = {"update": False}
+
+
+class TagUpdate(UpdateView):
+
+    form_class = TagForm
+    model = Tag
+    template_name = "tag/form.html"
+    extra_context = {"update": True}
+
+
+class TagDelete(DeleteView):
+
+    model = Tag
+    template_name = "tag/confirm_delete.html"
+    success_url = reverse_lazy('tag_list')
 
 
 class StartupList(ListView):
